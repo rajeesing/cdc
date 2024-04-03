@@ -48,3 +48,47 @@ GO
     @capture_instance = N'dbo_Employee' -- this you can find in change_tables entity by expanding your database explorer and System Tables folder in tree view.
 GO
 ```
+#Change Data Capture In Action
+After enabling CDC on both you should see minimum set of tables created under System Tables with cdc schema:
+1. cdc.captured_columns
+2. cdc.change_tables
+3. cdc.dbo_Employee_CT
+4. cdc.ddl_history
+5. cdc.index_columns
+6. cdc.lsn_time_mapping
+7. dbo.systransschemas
+
+Try to insert a row in the employee table which has following schema definitions
+```
+Table: Employee
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[FirstName] [nvarchar](50) NOT NULL,
+	[MiddleName] [nvarchar](50) NULL,
+	[LastName] [nvarchar](50) NOT NULL,
+	[DesignationId] [int] NOT NULL,
+```
+Now insert a row to Employee table
+```
+INSERT INTO dbo.Employee VALUES('Sally','J.','Smith',1)
+INSERT INTO dbo.Employee VALUES('John','N.','Doe',1)
+```
+Output:
+| __$start_lsn           | __$end_lsn | __$seqval              | __$operation | __$update_mask | Id | FirstName | MiddleName | LastName | DesignationId | __$command_id |
+|------------------------|------------|------------------------|--------------|----------------|----|-----------|------------|----------|---------------|---------------|
+| 0x0000002A000008990004 | NULL       | 0x0000002A000008990003 | 2            | 0x1F           | 2  | Sally     | J.         | Smith    | 1             | 1             |
+| 0x0000002A000008B90003 | NULL       | 0x0000002A000008B90002 | 3            | 0x0A           | 1  | John      | N.         | Doe      | 1             | 1             |
+
+Now let's update one:
+```
+  Update [dbo].[Employee] SET
+  FirstName = 'Johnn',
+  LastName = 'Doee'
+  WHERE ID = 1
+```
+
+Output:
+| __$start_lsn           | __$end_lsn | __$seqval              | __$operation | __$update_mask | Id | FirstName | MiddleName | LastName | DesignationId | __$command_id |
+|------------------------|------------|------------------------|--------------|----------------|----|-----------|------------|----------|---------------|---------------|
+| 0x0000002A000008990004 | NULL       | 0x0000002A000008990003 | 2            | 0x1F           | 2  | Sally     | J.         | Smith    | 1             | 1             |
+| 0x0000002A000008B90003 | NULL       | 0x0000002A000008B90002 | 3            | 0x0A           | 1  | John      | N.         | Doe      | 1             | 1             |
+| 0x0000002A000008B90003 | NULL       | 0x0000002A000008B90002 | 4            | 0x0A           | 1  | Johnn     | N.         | Doee     | 1             | 1             |
