@@ -1,0 +1,5 @@
+Open your Azure Portal and login (if you don't have, get one)
+Open navigation menu and select "All Services"
+
+Select Event Hubs and Create event hub namespace and then add one event hub.
+
