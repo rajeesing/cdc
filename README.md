@@ -7,7 +7,7 @@ We are using SQL Server as a database for all our CDC activity with sysadmin per
 ## Pre-requisit
 Change data capture is only available in the Enterprise, Developer, Enterprise Evaluation, and Standard editions.
 
-Create or Find database in which you want to enable CDC and use execute below script (easier when you use Microsoft SQL Server Management Studio, if you don't have, install from here https://aka.ms/ssmsfullsetup)
+Create or Find the database in which you want to enable CDC and execute below script (easier when you use Microsoft SQL Server Management Studio. If you don't have one, install it from here https://aka.ms/ssmsfullsetup)
 
 ```
 USE cdcexample
@@ -15,9 +15,9 @@ GO
 EXEC sys.sp_cdc_enable_db
 GO
 ```
-Note: Here cdcexample is the name of database. Please replace with your database name.
+Note: Here cdcexample is the name of the database. Please replace it with your database name.
 
-If you wish to disabled the CDC, you can use below script:
+If you wish to disable the CDC, you can use the below script:
 
 ```
 USE cdcexample
@@ -25,7 +25,7 @@ GO
 EXEC sys.sp_cdc_disable_db
 GO
 ```
-Now your database has enabled CDC, this is the time to identify which table that you wanted to capture activities (insert, update, delete DML operations) and use below script to enable CDC on table:
+Now your database has enabled CDC, this is the time to identify which table that you want to capture activities (insert, update, delete DML operations) and use the below script to enable CDC on the table:
 
 ```
 USE cdcexample
@@ -38,18 +38,18 @@ EXEC sys.sp_cdc_enable_table
     @supports_net_changes = 1 -- if it is set to 1, a net changes function is also generated for the capture instance. This function returns only one change for each distinct row changed in the interval specified in the call.
 GO
 ```
-If you wanted to disabled the CDC on table, use below script:
+If you wanted to disable the CDC on the table, use the below script:
 ```
 USE cdcexample
 GO
     EXEC sys.sp_cdc_disable_table
     @source_schema = N'dbo',
     @source_name   = N'Employee',
-    @capture_instance = N'dbo_Employee' -- this you can find in change_tables entity by expanding your database explorer and System Tables folder in tree view.
+    @capture_instance = N'dbo_Employee' -- this you can find in the change_tables entity by expanding your database explorer and System Tables folder in the tree view.
 GO
 ```
 # Change Data Capture In Action
-After enabling CDC on both you should see minimum set of tables created under System Tables with cdc schema:
+After enabling CDC on both you should see a minimum set of tables created under System Tables with cdc schema:
 1. cdc.captured_columns
 2. cdc.change_tables
 3. cdc.dbo_Employee_CT
@@ -58,7 +58,7 @@ After enabling CDC on both you should see minimum set of tables created under Sy
 6. cdc.lsn_time_mapping
 7. dbo.systransschemas
 
-Try to insert a row in the employee table which has following schema definitions
+Try to insert a row in the employee table which has the following schema definitions
 ```
 Table: Employee
 	[Id] [int] IDENTITY(1,1) NOT NULL,
