@@ -69,8 +69,8 @@ Table: Employee
 ```
 Now insert a row to Employee table
 ```
-INSERT INTO dbo.Employee VALUES('Sally','J.','Smith',1)
-INSERT INTO dbo.Employee VALUES('John','N.','Doe',1)
+INSERT INTO dbo.Employee VALUES('John','N.','Doe',1);
+INSERT INTO dbo.Employee VALUES('Sally','J.','Smith',1);
 ```
 Output:
 | __$start_lsn           | __$end_lsn | __$seqval              | __$operation | __$update_mask | Id | FirstName | MiddleName | LastName | DesignationId | __$command_id |
