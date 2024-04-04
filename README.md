@@ -92,3 +92,10 @@ Output:
 | 0x0000002A000008990004 | NULL       | 0x0000002A000008990003 | 2            | 0x1F           | 2  | Sally     | J.         | Smith    | 1             | 1             |
 | 0x0000002A000008B90003 | NULL       | 0x0000002A000008B90002 | 3            | 0x0A           | 1  | John      | N.         | Doe      | 1             | 1             |
 | 0x0000002A000008B90003 | NULL       | 0x0000002A000008B90002 | 4            | 0x0A           | 1  | Johnn     | N.         | Doee     | 1             | 1             |
+
+# Data Utilization
+
+Let's look what we have been doing. Whenever we need to gather change information, we are transfer batch of data from source to destination at regular intervals or taking a backups of tables where data are residing and restore to the location where we want. The value we are missing here is real time analytics and this might be the issue in terms for resource utilization and data inconsistencies in some cases.
+
+![image](https://github.com/rajeesing/cdc/assets/7796293/bf01ab25-37a1-437b-b133-58659b70a847)
+
