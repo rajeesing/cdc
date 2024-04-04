@@ -48,7 +48,7 @@ GO
     @capture_instance = N'dbo_Employee' -- this you can find in the change_tables entity by expanding your database explorer and System Tables folder in the tree view.
 GO
 ```
-# Change Data Capture In Action
+# Change Data Capture Setup
 After enabling CDC on both you should see a minimum set of tables created under System Tables with cdc schema:
 1. cdc.captured_columns
 2. cdc.change_tables
