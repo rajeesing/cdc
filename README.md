@@ -94,8 +94,21 @@ Output:
 | 0x0000002A000008B90003 | NULL       | 0x0000002A000008B90002 | 4            | 0x0A           | 1  | Johnn     | N.         | Doee     | 1             | 1             |
 
 # Data Utilization
-
+## Problem
 Let's look what we have been doing. Whenever we need to gather change information, we are transfer batch of data from source to destination at regular intervals or taking a backups of tables where data are residing and restore to the location where we want. The value we are missing here is real time analytics and this might be the issue in terms for resource utilization and data inconsistencies in some cases.
 
 ![image](https://github.com/rajeesing/cdc/assets/7796293/bf01ab25-37a1-437b-b133-58659b70a847)
 
+
+# Solution
+**Debezium** is open source distributed platform to capture changes on your database. Debezium supports many relational and non-relational databases. It can report any big data storage systems, like Azure SQL, Big data etc. There are following supported database list which works with Debezium are:
+1. MySQL
+2. SQL Server
+3. Oracle DB
+4. DB2
+5. MongoDB
+6. Cassandra
+7. PostgreSQL
+8. Vitess
+
+   
