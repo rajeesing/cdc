@@ -1,5 +1,5 @@
 # About Change Data Capture (CDC)
-Change data capture utilizes the SQL Server Agent to log insertions, updates, and deletions occurring in a table. So, it makes these data changes accessible to be easily consumed using a relational format.
+Change data capture utilizes the SQL Server Agent to log insertions, updates, and deletions occurring in a table. So, it makes these data changes accessible to be easily consumed using a relational format. [Click here](https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-data-capture-sql-server?view=sql-server-2017) for more details.
 
 # Configure for CDC
 We are using SQL Server as a database for all our CDC activity with sysadmin permission. 
@@ -120,6 +120,17 @@ To consume change data based on your own need, may vary need basis. We are expla
 ### Debezium In Action
 Debezium is a set of distributed services to capture changes in your databases so that your applications can see those changes and respond to them. Debezium records all row-level changes within each database table in a change event stream, and applications simply read these streams to see the change events in the same order in which they occurred. For more info follow [Debezium doc](https://debezium.io/documentation/reference/2.5/index.html).
 
+In order to bring Debezium in action you need following services.
+1. **Zookeeper**:
+   ZooKeeper is used in distributed systems for service synchronization and as a naming registry.  When working with Apache Kafka, ZooKeeper is primarily used to track the status of nodes in the Kafka cluster and maintain a list of Kafka topics and messages. 
+   
+3. **Kafka**:
+   Apache Kafka is a distributed event store and stream-processing open-source platform. 
+
+ZooKeeper isn’t memory intensive when it’s working solely with Kafka. Much like memory,  ZooKeeper doesn’t consume CPU resources heavily.  However, it is best practice to provide a dedicated CPU core for ZooKeeper to ensure there are no issues with context switching.
+
+With the popular gain of docker, to spin such systems is become easy and don't have maintain dedicated systems to spin those services. This is the one of the cost effective solution that uses docker configuration to spin container and utilize for our need. Below is the docker-compose file to run the containers and establish communication between each other.
+
 **docker-compose.yaml**
 ```
 version: '3'
@@ -177,15 +188,18 @@ services:
      - STATUS_STORAGE_TOPIC=my_connect_statuses
     volumes:
      #https://debezium.io/documentation/reference/2.5/connectors/sqlserver.html
-     - ./connectors/debezium-connector-sqlserver:/kafka/connect/debezium-connector-sqlserver
+     - ./connectors/debezium-connector-sqlserver:/kafka/connect/debezium-connector-sqlserver #first part (before colon), it is the local directory relative connector path of your docker-compose
 ```
+To spin container from above docker-compose.yml file use ```docker-compose up -d``` command to execute from your terminal.
 
-If all goes well you can see all containers running successfully and looks like almost similar to below screen. You need Docker for Windows which you can download from [here](https://docs.docker.com/desktop/install/windows-install/).
+If all goes well you can see all containers running successfully and looks like almost similar to below screen. If you don't have Docker for Windows, then you need one that can download when you [click here](https://docs.docker.com/desktop/install/windows-install/).
 
 ![image](https://github.com/rajeesing/cdc/assets/7796293/19af9357-159c-4245-b5b7-cf1ca7da6403)
 
-### Configure the Connector
+Once all services are running, this is the time to configure connector. We are using Microsoft SQL connector which you can download when you [click here](https://repo1.maven.org/maven2/io/debezium/debezium-connector-sqlserver/2.6.0.Final/debezium-connector-sqlserver-2.6.0.Final-plugin.tar.gz)
 
+### Configure the Connector
+To configure connector, you can use any API client tool for ex. Postman, Bruno etc. and configure the endpoint with below given details:
 POST - ```http://localhost:8083/connectors```
 ```
 {
@@ -203,8 +217,7 @@ POST - ```http://localhost:8083/connectors```
         "schema.history.internal.kafka.bootstrap.servers": "kafka:29092",
         "schema.history.internal.kafka.topic": "schemahistory.fullfillment",
         "topic.prefix": "cdcexample",
-        "database.trustServerCertificate": true
-
+        "database.trustServerCertificate": true //not suggested for production envs.
     }
 }
 ```
