@@ -221,5 +221,7 @@ POST - ```http://localhost:8083/connectors```
     }
 }
 ```
+After connection established, you can verify about the connection using ```http://localhost:8083/connectors/cdcexample-connector/status``` endpoint using GET http method.
+
 
 
