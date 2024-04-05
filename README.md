@@ -7,7 +7,7 @@ We are using SQL Server as a database for all our CDC activity with sysadmin per
 ## Pre-requisit
 Change data capture is only available in the Enterprise, Developer, Enterprise Evaluation, and Standard editions.
 
-Create or Find the database in which you want to enable CDC and execute below script (easier when you use Microsoft SQL Server Management Studio. If you don't have one, install it from here https://aka.ms/ssmsfullsetup)
+Create or Find the database in which you want to enable CDC and execute below script (easier when you use Microsoft SQL Server Management Studio. If you don't have one, install it from here https://aka.ms/ssmsfullsetup). Just make sure SQL Server Agent is enabled which you can do from Windows Services (type services.msc in run window [⊞ + R])
 
 ```
 USE cdcexample
