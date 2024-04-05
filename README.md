@@ -111,7 +111,102 @@ Let's look what we have been doing. Whenever we need to gather change informatio
 7. PostgreSQL
 8. Vitess
 
-# Debezium In Action
+# Consume Change Data
+To consume change data based on your own need, may vary need basis. We are explaining two different mechanism that you can use to consume change data in SQL server.
+## 1. Writing a custom C# code (Pull method)
+
+## 2. Debezium (Push method)
+
+### Debezium In Action
+Debezium is a set of distributed services to capture changes in your databases so that your applications can see those changes and respond to them. Debezium records all row-level changes within each database table in a change event stream, and applications simply read these streams to see the change events in the same order in which they occurred. For more info follow [Debezium doc](https://debezium.io/documentation/reference/2.5/index.html).
+
+**docker-compose.yaml**
+```
+version: '3'
+services:
+  # Zookeeper, single node
+  zookeeper:
+    image: wurstmeister/zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 2181:2181
+      - 2888:2888
+      - 3888:3888
+
+  # kafka single node     
+  kafka:
+    image: wurstmeister/kafka:latest
+    restart: "no"
+    links:
+      - zookeeper
+    ports:
+      - 9992:9992
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: INTERNAL://:29092,EXTERNAL://:9992
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:29092,EXTERNAL://localhost:9992
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+
+  #kafdrop for topic/msg visualization
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    restart: "no"
+    environment:
+      KAFKA_BROKERCONNECT: "kafka:29092"
+    ports:
+      - 9010:9000
+    depends_on:
+      - kafka
+
+  #Refer https://hub.docker.com/r/debezium/example-postgres/tags?page=1&name=1.9 for basic idea
+  sqlserverdebezium:
+    image: quay.io/debezium/connect:latest
+    links:
+     - kafka
+    ports:
+      - 8083:8083
+    environment:
+     - BOOTSTRAP_SERVERS=kafka:29092
+     - GROUP_ID=1
+     - CONFIG_STORAGE_TOPIC=my_connect_configs
+     - OFFSET_STORAGE_TOPIC=my_connect_offsets
+     - STATUS_STORAGE_TOPIC=my_connect_statuses
+    volumes:
+     #https://debezium.io/documentation/reference/2.5/connectors/sqlserver.html
+     - ./connectors/debezium-connector-sqlserver:/kafka/connect/debezium-connector-sqlserver
+```
+
+If all goes well you can see all containers running successfully and looks like almost similar to below screen. You need Docker for Windows which you can download from [here](https://docs.docker.com/desktop/install/windows-install/).
 
 ![image](https://github.com/rajeesing/cdc/assets/7796293/19af9357-159c-4245-b5b7-cf1ca7da6403)
+
+### Configure the Connector
+
+POST - ```http://localhost:8083/connectors```
+```
+{
+    "name": "cdcexample-connector",
+    "config": {
+        "connector.class": "io.debezium.connector.sqlserver.SqlServerConnector",
+        "database.hostname": "<Sql Server Name>",
+        "database.port": "1433",
+        "database.user": "<Sql Server User Name>",
+        "database.password": "<Password>",
+        "database.dbname": "cdcexample",
+        "database.names": "cdcexample",
+        "database.server.name": "<Sql Server Name>",
+        "table.include.list": "<Table Name>", //in case of multiple, you separate them with comma
+        "schema.history.internal.kafka.bootstrap.servers": "kafka:29092",
+        "schema.history.internal.kafka.topic": "schemahistory.fullfillment",
+        "topic.prefix": "cdcexample",
+        "database.trustServerCertificate": true
+
+    }
+}
+```
+
 
