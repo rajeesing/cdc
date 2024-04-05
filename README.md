@@ -111,4 +111,7 @@ Let's look what we have been doing. Whenever we need to gather change informatio
 7. PostgreSQL
 8. Vitess
 
-   
+# Debezium In Action
+
+![image](https://github.com/rajeesing/cdc/assets/7796293/19af9357-159c-4245-b5b7-cf1ca7da6403)
+
