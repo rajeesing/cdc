@@ -101,7 +101,9 @@ Let's look what we have been doing. Whenever we need to gather change informatio
 
 
 # Solution
-**Debezium** is open source distributed platform to capture changes on your database. Debezium supports many relational and non-relational databases. It can report any big data storage systems, like Azure SQL, Big data etc. There are following supported database list which works with Debezium are:
+**Debezium** is open source distributed platform to capture changes on your database. Debezium supports many relational and non-relational databases. It can report any big data storage systems, like Azure SQL, Big data etc. The good thing with Change Data Capture is that you have data available at real time; now we need to make it feasible to consume the data in real time.
+
+There are following supported database list which works with Debezium are:
 1. MySQL
 2. SQL Server
 3. Oracle DB
