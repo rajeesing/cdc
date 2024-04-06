@@ -120,6 +120,9 @@ To consume change data based on your own need, may vary need basis. We are expla
 ### Debezium In Action
 Debezium is a set of distributed services to capture changes in your databases so that your applications can see those changes and respond to them. Debezium records all row-level changes within each database table in a change event stream, and applications simply read these streams to see the change events in the same order in which they occurred. For more info follow [Debezium doc](https://debezium.io/documentation/reference/2.5/index.html).
 
+![image](https://github.com/rajeesing/cdc/assets/7796293/d63a230b-108f-4403-bb23-5e21fc9d05eb)
+
+
 In order to bring Debezium in action you need following services.
 1. **Zookeeper**:
    ZooKeeper is used in distributed systems for service synchronization and as a naming registry.  When working with Apache Kafka, ZooKeeper is primarily used to track the status of nodes in the Kafka cluster and maintain a list of Kafka topics and messages. 
