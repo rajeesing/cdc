@@ -205,7 +205,10 @@ Once all services are running, this is the time to configure connector. We are u
 
 ### Configure the Connector
 To configure connector, you can use any API client tool for ex. Postman, Bruno etc. and configure the endpoint with below given details:
+
 POST - ```http://localhost:8083/connectors```
+
+Send below JSON to Request Body
 ```
 {
     "name": "cdcexample-connector",
@@ -228,5 +231,11 @@ POST - ```http://localhost:8083/connectors```
 ```
 After connection established, you can verify about the connection using ```http://localhost:8083/connectors/cdcexample-connector/status``` endpoint using GET http method.
 
+
+
+# Mirror to Azure Event Hub
+
+
+![image](https://github.com/rajeesing/cdc/assets/7796293/831e9ed3-8d80-4d22-98fb-ef0e8021d821)
 
 
