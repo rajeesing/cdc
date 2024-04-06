@@ -231,7 +231,9 @@ Send below JSON to Request Body
 ```
 After connection established, you can verify about the connection using ```http://localhost:8083/connectors/cdcexample-connector/status``` endpoint using GET http method.
 
+You can verify your message cluster in your kafka message explorer which was spun with your docker-compose as a container called **kafdrop**. If you are using the same name from this example, you should be able to explore your message from below URL.
 
+http://localhost:9010/topic/cdcexample.cdcexample.dbo.Employee/messages?partition=0&offset=0&count=100&keyFormat=DEFAULT&format=DEFAULT
 
 # Mirror to Azure Event Hub
 
