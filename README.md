@@ -235,8 +235,7 @@ After connection established, you can verify about the connection using ```http:
 
 # Mirror to Azure Event Hub
 
-
-![image](https://github.com/rajeesing/cdc/assets/7796293/831e9ed3-8d80-4d22-98fb-ef0e8021d821)
+<img src="https://github.com/rajeesing/cdc/assets/7796293/831e9ed3-8d80-4d22-98fb-ef0e8021d821" alt="drawing" width="600"/>
 
 Clone the below repo:
 
