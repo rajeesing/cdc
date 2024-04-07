@@ -340,3 +340,10 @@ Apache Kafka distribution comes with `connect-mirror-maker.sh` script that is bu
    ```
 1. Upon the successful execution of the script, you should see the Kafka topics and events getting replicated to your Event Hubs namespace. 
 1. To verify that events are making it to the Kafka-enabled Event Hubs, check out the ingress statistics in the [Azure portal](https://azure.microsoft.com/features/azure-portal/), or run a consumer against the Event Hubs.
+
+
+## Verify the event in Azure
+1. Login to your Azure Credential
+2. Choose your **Event Hubs Namespace**
+3. There should be Event Hubs created with the ```name cdcexample.cdcexample.dbo.employee```
+   
