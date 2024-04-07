@@ -342,6 +342,12 @@ Apache Kafka distribution comes with `connect-mirror-maker.sh` script that is bu
 1. To verify that events are making it to the Kafka-enabled Event Hubs, check out the ingress statistics in the [Azure portal](https://azure.microsoft.com/features/azure-portal/), or run a consumer against the Event Hubs.
 
 
+```
+.\kafka\bin\windows\kafka-console-consumer.bat --bootstrap-server cdceventhubns.servicebus.windows.net:9093 --topic cdcexample.cdcexample.dbo.Employee --consumer.config .\config\kafkaToAzureEventHub.properties
+
+.\kafka\bin\windows\kafka-console-producer.bat --bootstrap-server cdceventhubns.servicebus.windows.net:9093 --topic cdcexample.cdcexample.dbo.Employee --producer.config .\kafka\config\kafkaToAzureEventHub.properties
+```
+
 ## Verify the event in Azure
 1. Login to your Azure Credential
 2. Choose your **Event Hubs Namespace**
