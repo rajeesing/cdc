@@ -345,5 +345,5 @@ Apache Kafka distribution comes with `connect-mirror-maker.sh` script that is bu
 ## Verify the event in Azure
 1. Login to your Azure Credential
 2. Choose your **Event Hubs Namespace**
-3. There should be Event Hubs created with the ```name cdcexample.cdcexample.dbo.employee```
+3. There should be Event Hubs created with the name ```cdcexample.cdcexample.dbo.employee```
    
