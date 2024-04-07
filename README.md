@@ -116,10 +116,10 @@ There are following supported database list which works with Debezium are:
 # Consume Change Data
 To consume change data based on your own need, may vary need basis. We are explaining two different mechanism that you can use to consume change data in SQL server.
 ## 1. Writing a custom C# code (Pull method)
-To capture change in data, one option to create a .net based application, read the change information from the tables under cdc schema on a fixed frequency. A sample application written using .net 8 application to poll the any change each second and display the payload on your console. Update the following information in program.cs file
+To capture change in data, one option to create a .net based application. You can download the project added in this repository and open with choice of your IDE (Visual Studio Code or IDE etc). This application demonstrate read the change information from the tables under cdc schema on a fixed frequency. this sample application to poll the any change each second and display the payload on your console. You are free to use this data based on your need. Update the following information in program.cs file
 
 ```
- static string CreateConnectionString()
+static string CreateConnectionString()
 {
     SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
     builder.DataSource = "<SQL Server Instance Name>";
@@ -130,6 +130,7 @@ To capture change in data, one option to create a .net based application, read t
     return builder.ConnectionString;
 }
 ```
+
 
 ## 2. Debezium (Push method)
 
