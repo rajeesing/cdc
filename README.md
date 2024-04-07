@@ -254,22 +254,6 @@ As Azure Event Hubs is compatible with Apache Kafka protocol, you can use Mirror
 
 Mirror Maker 2 dynamically detects changes to topics and ensures source and target topic properties are synchronized, including offsets and partitions. It can be used to replicated data bi-directionally between Kafka cluster and Event Hubs namespace. 
 
-## Prerequisites
-
-To complete this tutorial, make sure you have:
-
-* Read through the [Event Hubs for Apache Kafka](event-hubs-for-kafka-ecosystem-overview.md) article. 
-* An Azure subscription. If you don't have one, create a [free account](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio) before you begin.
-* [Java Development Kit (JDK) 1.7+](/azure/developer/java/fundamentals/java-support-on-azure)
-    * On Ubuntu, run `apt-get install default-jdk` to install the JDK.
-    * Be sure to set the JAVA_HOME environment variable to point to the folder where the JDK is installed.
-* [Download](https://maven.apache.org/download.cgi) and [install](https://maven.apache.org/install.html) a Maven binary archive
-    * On Ubuntu, you can run `apt-get install maven` to install Maven.
-* [Git](https://www.git-scm.com/downloads)
-    * On Ubuntu, you can run `sudo apt-get install git` to install Git.
-* [Apache Kafka distribution](https://kafka.apache.org/downloads)
-    * Download the preferred Apache Kafka distribution (which should contain the Mirror Maker 2 distribution.)
-
 ## Create an Event Hubs namespace
 
 An Event Hubs namespace is required to send and receive from any Event Hubs service. See [Creating an event hub](event-hubs-create.md) for instructions to create a namespace and an event hub. Make sure to copy the Event Hubs connection string for later use.
@@ -281,11 +265,6 @@ Now that you have an Event Hubs connection string, clone the Azure Event Hubs fo
 git clone https://github.com/Azure/azure-event-hubs-for-kafka.git
 cd azure-event-hubs-for-kafka/tutorials/mirror-maker-2
 ```
-
-## Set up or use an existing Kafka cluster
-If you don't have an existing Kafka cluster, use the [Kafka quickstart guide](https://kafka.apache.org/quickstart) to set up a Kafka cluster with the desired settings (or use an existing Kafka cluster). For testing purposes, you can also create a couple of topics in the newly created Kafka cluster and publish data to them. 
-
-If you already have an existing Kafka cluster on-premises or in a managed Kafka cloud service, then you can use it to replicate existing data to Event Hubs. 
 
 ## Configure Kafka Mirror Maker 2
 
