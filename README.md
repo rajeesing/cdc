@@ -256,7 +256,7 @@ Mirror Maker 2 dynamically detects changes to topics and ensures source and targ
 
 ## Create an Event Hubs namespace
 
-An Event Hubs namespace is required to send and receive from any Event Hubs service. See [Creating an event hub](event-hubs-create.md) for instructions to create a namespace and an event hub. Make sure to copy the Event Hubs connection string for later use.
+An Event Hubs namespace is required to send and receive from any Event Hubs service. See [Creating an event hub]([event-hubs-create.md](https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-create)) for instructions to create a namespace and an event hub. Make sure to copy the Event Hubs connection string for later use.
 
 ## Clone the example project
 Now that you have an Event Hubs connection string, clone the Azure Event Hubs for Kafka repository and navigate to the `mirror-maker-2` subfolder:
