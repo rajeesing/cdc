@@ -262,7 +262,7 @@ git clone https://github.com/Azure/azure-event-hubs-for-kafka.git
 
 cd azure-event-hubs-for-kafka/tutorials/mirror-maker-2
 
-## Introduction
+## About MirrorMaker 2.0 (MM2)
 Apache Kafka MirrorMaker 2.0 (MM2) is designed to make it easier to mirror or replicate topics from one Kafka cluster to another. Mirror Maker uses the Kafka Connect framework to simplify configuration and scaling. For more detailed information on Kafka MirrorMaker, see the [Kafka Mirroring/MirrorMaker guide](https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=27846330).
 
 As Azure Event Hubs is compatible with Apache Kafka protocol, you can use Mirror Maker 2 to replicate data between an existing Kafka cluster and an Event Hubs namespace. 
