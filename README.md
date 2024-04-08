@@ -254,14 +254,6 @@ http://localhost:9010/topic/cdcexample.cdcexample.dbo.Employee/messages?partitio
 
 <img src="https://github.com/rajeesing/cdc/assets/7796293/831e9ed3-8d80-4d22-98fb-ef0e8021d821" alt="drawing" width="600"/>
 
-Clone the below repo:
-
-```
-git clone https://github.com/Azure/azure-event-hubs-for-kafka.git
-```
-
-cd azure-event-hubs-for-kafka/tutorials/mirror-maker-2
-
 ## About MirrorMaker 2.0 (MM2)
 Apache Kafka MirrorMaker 2.0 (MM2) is designed to make it easier to mirror or replicate topics from one Kafka cluster to another. Mirror Maker uses the Kafka Connect framework to simplify configuration and scaling. For more detailed information on Kafka MirrorMaker, see the [Kafka Mirroring/MirrorMaker guide](https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=27846330).
 
@@ -334,7 +326,6 @@ Apache Kafka distribution comes with `kafka-mirror-maker.bat` script that is bun
    ```
 1. Upon the successful execution of the script, you should see the Kafka topics and events getting replicated to your Event Hubs namespace. 
 1. To verify that events are making it to the Kafka-enabled Event Hubs, check out the ingress statistics in the [Azure portal](https://azure.microsoft.com/features/azure-portal/), or run a consumer against the Event Hubs.
-
 
 ```
 .\kafka\bin\kafka-console-consumer.bat --bootstrap-server cdceventhubns.servicebus.windows.net:9093 --topic cdcexample.cdcexample.dbo.Employee --consumer.config .\config\kafkaToAzureEventHub.properties
