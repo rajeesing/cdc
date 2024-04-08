@@ -283,7 +283,7 @@ cd azure-event-hubs-for-kafka/tutorials/mirror-maker-2
 
 ## Configure Kafka Mirror Maker 2
 
-Apache Kafka distribution comes with `connect-mirror-maker.sh` script that is bundled with the Kafka library that implements a distributed Mirror Maker 2 cluster. It manages the Connect workers internally based on a configuration file. Internally MirrorMaker driver creates and handles pairs of each connector – *MirrorSource Connector*, *MirrorSink Connector*, *MirrorCheckpoint Connector* and *MirrorHeartbeat Connector*.
+Apache Kafka distribution comes with `kafka-mirror-maker.bat` script that is bundled with the Kafka library that implements a distributed Mirror Maker 2 cluster. It manages the Connect workers internally based on a configuration file. Internally MirrorMaker driver creates and handles pairs of each connector – *MirrorSource Connector*, *MirrorSink Connector*, *MirrorCheckpoint Connector* and *MirrorHeartbeat Connector*.
 
 1. To configure Mirror Maker 2 to replicate data, you need to update Mirror Maker 2 configuration file `kafka-to-eh-connect-mirror-maker.properties` to define the replication topology. 
 1. In the `kafka-to-eh-connect-mirror-maker.properties` config file, define cluster aliases that you plan to use for your Kafka cluster(source) and Event Hubs (destination). 
@@ -329,8 +329,8 @@ Apache Kafka distribution comes with `connect-mirror-maker.sh` script that is bu
    ```
 
 1. Then you copy `kafka-to-eh-connect-mirror-maker.properties` configuration file to the Kafka distribution's config directory and can run the Mirror Maker 2 script using the following command.
-   ```bash
-    ./bin/connect-mirror-maker.sh ./config/kafka-to-eh-connect-mirror-maker.properties
+   ```
+   .\kafka\bin\kafka-mirror-maker.bat .\kafka\config\kafka-to-eh-connect-mirror-maker.properties
    ```
 1. Upon the successful execution of the script, you should see the Kafka topics and events getting replicated to your Event Hubs namespace. 
 1. To verify that events are making it to the Kafka-enabled Event Hubs, check out the ingress statistics in the [Azure portal](https://azure.microsoft.com/features/azure-portal/), or run a consumer against the Event Hubs.
