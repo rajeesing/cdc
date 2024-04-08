@@ -93,9 +93,14 @@ Output:
 | 0x0000002A000008B90003 | NULL       | 0x0000002A000008B90002 | 3            | 0x0A           | 1  | John      | N.         | Doe      | 1             | 1             |
 | 0x0000002A000008B90003 | NULL       | 0x0000002A000008B90002 | 4            | 0x0A           | 1  | Johnn     | N.         | Doee     | 1             | 1             |
 
+
+That's all we need to just enable a basic change data capture feature on a database and tables.
+
+---
+
 # Data Utilization
 ## Problem
-Let's look what we have been doing. Whenever we need to gather change information, we are transfer batch of data from source to destination at regular intervals or taking a backups of tables where data are residing and restore to the location where we want. The value we are missing here is real time analytics and this might be the issue in terms for resource utilization and data inconsistencies in some cases.
+Let's look what we have been doing. Whenever we need to gather change information, we are transferring batch of data from source to destination at regular intervals or taking a backups of tables where data are residing and later we restore to the location where we want. The value we are missing here is real time analytics and this might be the issue in terms for resource utilization and data inconsistencies in some cases.
 
 ![image](https://github.com/rajeesing/cdc/assets/7796293/bf01ab25-37a1-437b-b133-58659b70a847)
 
@@ -252,7 +257,7 @@ http://localhost:9010/topic/cdcexample.cdcexample.dbo.Employee/messages?partitio
 
 # Mirror to Azure Event Hub
 
-<img src="https://github.com/rajeesing/cdc/assets/7796293/831e9ed3-8d80-4d22-98fb-ef0e8021d821" alt="drawing" width="600"/>
+![image](https://github.com/rajeesing/cdc/assets/7796293/831e9ed3-8d80-4d22-98fb-ef0e8021d821)
 
 ## About MirrorMaker 2.0 (MM2)
 Apache Kafka MirrorMaker 2.0 (MM2) is designed to make it easier to mirror or replicate topics from one Kafka cluster to another. Mirror Maker uses the Kafka Connect framework to simplify configuration and scaling. For more detailed information on Kafka MirrorMaker, see the [Kafka Mirroring/MirrorMaker guide](https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=27846330).
