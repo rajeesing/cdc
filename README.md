@@ -271,25 +271,14 @@ Mirror Maker 2 dynamically detects changes to topics and ensures source and targ
 An Event Hubs namespace is required to send and receive from any Event Hubs service. See [Creating an event hub](https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-create) for instructions to create a namespace and an event hub. Make sure to copy the Event Hubs connection string for later use.
 
 ## Clone the example project
-Now that you have an Event Hubs connection string, clone the Azure Event Hubs for Kafka repository and navigate to the `mirror-maker-2` subfolder:
-
-```shell
-git clone https://github.com/Azure/azure-event-hubs-for-kafka.git
-cd azure-event-hubs-for-kafka/tutorials/mirror-maker-2
-```
+Now that you have an Event Hubs connection string, clone the project Azure Event Hubs for Kafka repository and navigate to the kafka\config subfolder:
 
 ## Configure Kafka Mirror Maker 2
 
-Apache Kafka distribution comes with `kafka-mirror-maker.bat` script that is bundled with the Kafka library that implements a distributed Mirror Maker 2 cluster. It manages the Connect workers internally based on a configuration file. Internally MirrorMaker driver creates and handles pairs of each connector – *MirrorSource Connector*, *MirrorSink Connector*, *MirrorCheckpoint Connector* and *MirrorHeartbeat Connector*.
+That project (Apache Kafka distribution) comes with `kafka-console-consumer.bat` and `kafka-console-producer.bat` scripts that are bundled with the Kafka library that implements a distributed Mirror Maker 2 cluster. It manages the Connect workers internally based on a configuration file. Internally MirrorMaker driver creates and handles pairs of each connector – *MirrorSource Connector*, *MirrorSink Connector*, *MirrorCheckpoint Connector* and *MirrorHeartbeat Connector*.
 
 1. To configure Mirror Maker 2 to replicate data, you need to update Mirror Maker 2 configuration file `kafka-to-eh-connect-mirror-maker.properties` to define the replication topology. 
 1. In the `kafka-to-eh-connect-mirror-maker.properties` config file, define cluster aliases that you plan to use for your Kafka cluster(source) and Event Hubs (destination). 
-
-   ```config
-    # cluster aliases 
-    clusters = source, destination
-   ```
-
 1. Then specify the connection information for your source, which is your Kafka cluster. 
    ```config
     source.bootstrap.servers = your-kafka-cluster-hostname:9092
@@ -326,17 +315,12 @@ Apache Kafka distribution comes with `kafka-mirror-maker.bat` script that is bun
    ```
 
 1. Then you copy `kafka-to-eh-connect-mirror-maker.properties` configuration file to the Kafka distribution's config directory and can run the Mirror Maker 2 script using the following command.
-   ```
-   .\kafka\bin\kafka-mirror-maker.bat .\kafka\config\kafka-to-eh-connect-mirror-maker.properties
-   ```
-1. Upon the successful execution of the script, you should see the Kafka topics and events getting replicated to your Event Hubs namespace. 
-1. To verify that events are making it to the Kafka-enabled Event Hubs, check out the ingress statistics in the [Azure portal](https://azure.microsoft.com/features/azure-portal/), or run a consumer against the Event Hubs.
-
 ```
 .\kafka\bin\kafka-console-consumer.bat --bootstrap-server cdceventhubns.servicebus.windows.net:9093 --topic cdcexample.cdcexample.dbo.Employee --consumer.config .\config\kafkaToAzureEventHub.properties
-
 .\kafka\bin\kafka-console-producer.bat --bootstrap-server cdceventhubns.servicebus.windows.net:9093 --topic cdcexample.cdcexample.dbo.Employee --producer.config .\kafka\config\kafkaToAzureEventHub.properties
 ```
+1. Upon the successful execution of the script, you should see the Kafka topics and events getting replicated to your Event Hubs namespace. 
+1. To verify that events are making it to the Kafka-enabled Event Hubs, check out the ingress statistics in the [Azure portal](https://azure.microsoft.com/features/azure-portal/), or run a consumer against the Event Hubs.
 
 ## Verify the event in Azure
 1. Login to your Azure Credential
