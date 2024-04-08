@@ -254,6 +254,8 @@ After connection established, you can verify about the connection using ```http:
 You can verify your message cluster in your kafka message explorer which was spun with your docker-compose as a container called **kafdrop**. If you are using the same name from this example, you should be able to explore your message from below URL.
 
 http://localhost:9010/topic/cdcexample.cdcexample.dbo.Employee/messages?partition=0&offset=0&count=100&keyFormat=DEFAULT&format=DEFAULT
+![image](https://github.com/rajeesing/cdc/assets/7796293/19fa4e39-7439-47d5-8d2a-2ff02a1f1a27)
+
 
 # Mirror to Azure Event Hub
 
