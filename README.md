@@ -7,7 +7,9 @@ We are using SQL Server as a database for all our CDC activity with sysadmin per
 ## Pre-requisit
 Change data capture is only available in the Enterprise, Developer, Enterprise Evaluation, and Standard editions.
 
-Create or Find the database in which you want to enable CDC and execute below script (easier when you use Microsoft SQL Server Management Studio. If you don't have one, install it from here https://aka.ms/ssmsfullsetup). Just make sure SQL Server Agent is enabled which you can do from Windows Services (type services.msc in run window [⊞ + R])
+Create or Find the database in which you want to enable CDC and execute the below script (easier when you use Microsoft SQL Server Management Studio. If you don't have one, install it from here https://aka.ms/ssmsfullsetup). Just make sure SQL Server Agent is enabled which you can do from Windows Services (type services.msc in run window [⊞ + R])
+
+Note: All future references in this document include this database and tables. 
 
 ```
 USE cdcexample
@@ -38,7 +40,7 @@ EXEC sys.sp_cdc_enable_table
     @supports_net_changes = 1 -- if it is set to 1, a net changes function is also generated for the capture instance. This function returns only one change for each distinct row changed in the interval specified in the call.
 GO
 ```
-If you wanted to disable the CDC on the table, use the below script:
+If you want to disable the CDC on the table, use the below script:
 ```
 USE cdcexample
 GO
@@ -67,7 +69,7 @@ Table: Employee
 	[LastName] [nvarchar](50) NOT NULL,
 	[DesignationId] [int] NOT NULL,
 ```
-Now insert a row to Employee table
+Now insert a row to the Employee table
 ```
 INSERT INTO dbo.Employee VALUES('John','N.','Doe',1);
 INSERT INTO dbo.Employee VALUES('Sally','J.','Smith',1);
@@ -100,7 +102,7 @@ That's all we need to just enable a basic change data capture feature on a datab
 
 # Data Utilization
 ## Problem
-Let's look what we have been doing. Whenever we need to gather change information, we are transferring batch of data from source to destination at regular intervals or taking a backups of tables where data are residing and later we restore to the location where we want. The value we are missing here is real time analytics and this might be the issue in terms for resource utilization and data inconsistencies in some cases.
+Let's look at what we have been doing. Whenever we need to gather change information, we transfer batches of data from source to destination at regular intervals or take a backup of tables where data are residing and later we restore to the location where we want. The value we are missing here is real-time analytics and this might be the issue in terms of resource utilization and data inconsistencies in some cases.
 
 ![image](https://github.com/rajeesing/cdc/assets/7796293/bf01ab25-37a1-437b-b133-58659b70a847)
 
@@ -108,9 +110,9 @@ Let's look what we have been doing. Whenever we need to gather change informatio
 ## Solution
 
 ## Consume Change Data
-To consume change data based on your own need, may vary need basis. We are explaining two different mechanism that you can use to consume change data in SQL server.
+To consume change data based on your own need, may vary need basis. We are explaining two different mechanisms that you can use to consume change data in SQL server.
 ### 1. Writing a custom C# code (Pull method)
-To capture change in data, one option to create a .net based application. You can download the project added in this repository and open with choice of your IDE (Visual Studio Code or IDE etc). This application demonstrate read the change information from the tables under cdc schema on a fixed frequency. this sample application to poll the any change each second and display the payload on your console. You are free to use this data based on your need. Update the following information in program.cs file
+To capture change in data, one option to create a .net based application. You can download the project added in this repository and open it with the choice of your IDE (Visual Studio Code or IDE etc). This application demonstrates reading the change information from the tables under cdc schema on a fixed frequency. this sample application to poll any change each second and display the payload on your console. You are free to use this data based on your need. Update the following information in program.cs file
 
 ```
 static string CreateConnectionString()
@@ -127,9 +129,9 @@ static string CreateConnectionString()
 
 
 ### 2. Debezium (Push method)
-**Debezium** is open source distributed platform to capture changes on your database. Debezium supports many relational and non-relational databases. It can report any big data storage systems, like Azure SQL, Big data etc. The good thing with Change Data Capture is that you have data available at real time; now we need to make it feasible to consume the data in real time. For more info follow [Debezium doc](https://debezium.io/documentation/reference/2.5/index.html).
+**Debezium** is an open source distributed platform to capture changes on your database. Debezium supports many relational and non-relational databases. It can report any big data storage systems, like Azure SQL, Big Data etc. The good thing with Change Data Capture is that you have data available in real time; now we need to make it feasible to consume the data in real-time. For more info follow [Debezium doc](https://debezium.io/documentation/reference/2.5/index.html).
 
-There are following supported database list which works with Debezium are:
+There are following supported database list that works with Debezium:
 1. MySQL
 2. SQL Server
 3. Oracle DB
@@ -152,7 +154,7 @@ Debezium’s flexibility, lightweight architecture, and low latency streaming ma
 
 ![image](https://github.com/rajeesing/cdc/assets/7796293/d63a230b-108f-4403-bb23-5e21fc9d05eb)
 
-In order to bring Debezium in action you need following services.
+In order to bring Debezium into action you need the following services.
 1. **Zookeeper**:
    ZooKeeper is used in distributed systems for service synchronization and as a naming registry.  When working with Apache Kafka, ZooKeeper is primarily used to track the status of nodes in the Kafka cluster and maintain a list of Kafka topics and messages. 
    
@@ -161,7 +163,7 @@ In order to bring Debezium in action you need following services.
 
 ZooKeeper isn’t memory intensive when it’s working solely with Kafka. Much like memory,  ZooKeeper doesn’t consume CPU resources heavily.  However, it is best practice to provide a dedicated CPU core for ZooKeeper to ensure there are no issues with context switching.
 
-With the popular gain of docker, to spin such systems is become easy and don't have maintain dedicated systems to spin those services. This is the one of the cost effective solution that uses docker configuration to spin container and utilize for our need. Below is the docker-compose file to run the containers and establish communication between each other.
+With the popular gain of docker, spinning such systems has become easy, and don't have maintain dedicated systems to spin those services. This is one of the cost-effective solutions that uses docker configuration to spin containers and utilize them for our needs. Below is the docker-compose file to run the containers and establish communication with each other.
 
 **docker-compose.yaml**
 ```
@@ -222,20 +224,20 @@ services:
      #https://debezium.io/documentation/reference/2.5/connectors/sqlserver.html
      - ./connectors/debezium-connector-sqlserver:/kafka/connect/debezium-connector-sqlserver #first part (before colon), it is the local directory relative connector path of your docker-compose
 ```
-To spin container from above docker-compose.yml file use ```docker-compose up -d``` command to execute from your terminal.
+To spin the container from the above docker-compose.yml file use ```docker-compose up -d``` command to execute from your terminal.
 
 If all goes well you can see all containers running successfully and looks like almost similar to below screen. If you don't have Docker for Windows, then you need one that can download when you [click here](https://docs.docker.com/desktop/install/windows-install/).
 
 ![image](https://github.com/rajeesing/cdc/assets/7796293/19af9357-159c-4245-b5b7-cf1ca7da6403)
 
-Once all services are running, this is the time to configure connector. We are using Microsoft SQL connector which you can download when you [click here](https://repo1.maven.org/maven2/io/debezium/debezium-connector-sqlserver/2.6.0.Final/debezium-connector-sqlserver-2.6.0.Final-plugin.tar.gz)
+Once all services are running, this is the time to configure the connector. We are using Microsoft SQL connector which you can download when you [click here](https://repo1.maven.org/maven2/io/debezium/debezium-connector-sqlserver/2.6.0.Final/debezium-connector-sqlserver-2.6.0.Final-plugin.tar.gz)
 
 #### Configure the Connector
-To configure connector, you can use any API client tool for ex. Postman, Bruno etc. and configure the endpoint with below given details:
+To configure the connector, you can use any API client tool for ex. Postman, Bruno etc. and configure the endpoint with below given details:
 
 POST - ```http://localhost:8083/connectors```
 
-Send below JSON to Request Body
+Send the below JSON to Request Body
 ```
 {
     "name": "cdcexample-connector",
@@ -256,9 +258,9 @@ Send below JSON to Request Body
     }
 }
 ```
-After connection established, you can verify about the connection using ```http://localhost:8083/connectors/cdcexample-connector/status``` endpoint using GET http method.
+After the connection is established, you can verify the connection using ```http://localhost:8083/connectors/cdcexample-connector/status``` endpoint using GET http method.
 
-You can verify your message cluster in your kafka message explorer which was spun with your docker-compose as a container called **kafdrop**. If you are using the same name from this example, you should be able to explore your message from below URL.
+You can verify your message cluster in your kafka message explorer which was spun with your docker-compose as a container called **kafdrop**. If you are using the same name as this example, you should be able to explore your message from the below URL.
 
 http://localhost:9010/topic/cdcexample.cdcexample.dbo.Employee/messages?partition=0&offset=0&count=100&keyFormat=DEFAULT&format=DEFAULT
 ![image](https://github.com/rajeesing/cdc/assets/7796293/19fa4e39-7439-47d5-8d2a-2ff02a1f1a27)
@@ -335,5 +337,7 @@ That project (Apache Kafka distribution) comes with `kafka-console-consumer.bat`
 1. Login to your Azure Credential
 2. Choose your **Event Hubs Namespace**
 3. There should be Event Hubs created with the name ```cdcexample.cdcexample.dbo.employee```
-4. Create a logic app or Azure function and use a Event hub trigger to consume payload.
+![image](https://github.com/rajeesing/cdc/assets/7796293/3a7e7fa2-2ccc-40ed-ad1f-d60d5365800c)
+
+5. Create a logic app or Azure function and use an Event hub trigger to consume payload.
    
