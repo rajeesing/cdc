@@ -105,22 +105,11 @@ Let's look what we have been doing. Whenever we need to gather change informatio
 ![image](https://github.com/rajeesing/cdc/assets/7796293/bf01ab25-37a1-437b-b133-58659b70a847)
 
 
-# Solution
-**Debezium** is open source distributed platform to capture changes on your database. Debezium supports many relational and non-relational databases. It can report any big data storage systems, like Azure SQL, Big data etc. The good thing with Change Data Capture is that you have data available at real time; now we need to make it feasible to consume the data in real time.
+## Solution
 
-There are following supported database list which works with Debezium are:
-1. MySQL
-2. SQL Server
-3. Oracle DB
-4. DB2
-5. MongoDB
-6. Cassandra
-7. PostgreSQL
-8. Vitess
-
-# Consume Change Data
+## Consume Change Data
 To consume change data based on your own need, may vary need basis. We are explaining two different mechanism that you can use to consume change data in SQL server.
-## 1. Writing a custom C# code (Pull method)
+### 1. Writing a custom C# code (Pull method)
 To capture change in data, one option to create a .net based application. You can download the project added in this repository and open with choice of your IDE (Visual Studio Code or IDE etc). This application demonstrate read the change information from the tables under cdc schema on a fixed frequency. this sample application to poll the any change each second and display the payload on your console. You are free to use this data based on your need. Update the following information in program.cs file
 
 ```
@@ -137,13 +126,31 @@ static string CreateConnectionString()
 ```
 
 
-## 2. Debezium (Push method)
+### 2. Debezium (Push method)
+**Debezium** is open source distributed platform to capture changes on your database. Debezium supports many relational and non-relational databases. It can report any big data storage systems, like Azure SQL, Big data etc. The good thing with Change Data Capture is that you have data available at real time; now we need to make it feasible to consume the data in real time. For more info follow [Debezium doc](https://debezium.io/documentation/reference/2.5/index.html).
 
-### Debezium In Action
-Debezium is a set of distributed services to capture changes in your databases so that your applications can see those changes and respond to them. Debezium records all row-level changes within each database table in a change event stream, and applications simply read these streams to see the change events in the same order in which they occurred. For more info follow [Debezium doc](https://debezium.io/documentation/reference/2.5/index.html).
+There are following supported database list which works with Debezium are:
+1. MySQL
+2. SQL Server
+3. Oracle DB
+4. DB2
+5. MongoDB
+6. Cassandra
+7. PostgreSQL
+8. Vitess
+
+#### Why Choose Debezium for CDC and Database Replication?
+Debezium’s flexibility, lightweight architecture, and low latency streaming make it a popular choice for CDC. It is also fairly easy to integrate into modern data stacks. Key benefits include:
+
+1. **Support for a wide range of databases**: Debezium has connectors for MongoDB, MySQL, PostgreSQL, SQL Server, Oracle, Db2, and Cassandra, with additional sources currently incubating.
+2. **Open source**: Debezium is open source under the Apache 2.0 license and backed by a strong community.
+3. **Low latency**: The architecture is lightweight and specifically designed for streaming data pipelines. 
+4. **Pluggable**: Debezium works with popular infrastructure tools such as Kafka and Docker.
+5. **Handling schema changes**: Depending on the specific database connector, Debezium will typically provide some level of automation for handling schema changes. Note this is only on the source level and is not propagated downstream (as we explain below).
+
+#### Debezium In Action
 
 ![image](https://github.com/rajeesing/cdc/assets/7796293/d63a230b-108f-4403-bb23-5e21fc9d05eb)
-
 
 In order to bring Debezium in action you need following services.
 1. **Zookeeper**:
@@ -223,7 +230,7 @@ If all goes well you can see all containers running successfully and looks like 
 
 Once all services are running, this is the time to configure connector. We are using Microsoft SQL connector which you can download when you [click here](https://repo1.maven.org/maven2/io/debezium/debezium-connector-sqlserver/2.6.0.Final/debezium-connector-sqlserver-2.6.0.Final-plugin.tar.gz)
 
-### Configure the Connector
+#### Configure the Connector
 To configure connector, you can use any API client tool for ex. Postman, Bruno etc. and configure the endpoint with below given details:
 
 POST - ```http://localhost:8083/connectors```
@@ -257,25 +264,25 @@ http://localhost:9010/topic/cdcexample.cdcexample.dbo.Employee/messages?partitio
 ![image](https://github.com/rajeesing/cdc/assets/7796293/19fa4e39-7439-47d5-8d2a-2ff02a1f1a27)
 
 
-# Mirror to Azure Event Hub
+### Mirror to Azure Event Hub
 
 ![image](https://github.com/rajeesing/cdc/assets/7796293/831e9ed3-8d80-4d22-98fb-ef0e8021d821)
 
-## About MirrorMaker 2.0 (MM2)
+#### About MirrorMaker 2.0 (MM2)
 Apache Kafka MirrorMaker 2.0 (MM2) is designed to make it easier to mirror or replicate topics from one Kafka cluster to another. Mirror Maker uses the Kafka Connect framework to simplify configuration and scaling. For more detailed information on Kafka MirrorMaker, see the [Kafka Mirroring/MirrorMaker guide](https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=27846330).
 
 As Azure Event Hubs is compatible with Apache Kafka protocol, you can use Mirror Maker 2 to replicate data between an existing Kafka cluster and an Event Hubs namespace. 
 
 Mirror Maker 2 dynamically detects changes to topics and ensures source and target topic properties are synchronized, including offsets and partitions. It can be used to replicated data bi-directionally between Kafka cluster and Event Hubs namespace. 
 
-## Create an Event Hubs namespace
+#### Create an Event Hubs namespace
 
 An Event Hubs namespace is required to send and receive from any Event Hubs service. See [Creating an event hub](https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-create) for instructions to create a namespace and an event hub. Make sure to copy the Event Hubs connection string for later use.
 
-## Clone the example project
+#### Clone the example project
 Now that you have an Event Hubs connection string, clone the project Azure Event Hubs for Kafka repository and navigate to the kafka\config subfolder:
 
-## Configure Kafka Mirror Maker 2
+#### Configure Kafka Mirror Maker 2
 
 That project (Apache Kafka distribution) comes with `kafka-console-consumer.bat` and `kafka-console-producer.bat` scripts that are bundled with the Kafka library that implements a distributed Mirror Maker 2 cluster. It manages the Connect workers internally based on a configuration file. Internally MirrorMaker driver creates and handles pairs of each connector – *MirrorSource Connector*, *MirrorSink Connector*, *MirrorCheckpoint Connector* and *MirrorHeartbeat Connector*.
 
